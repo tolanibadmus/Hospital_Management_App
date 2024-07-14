@@ -1,5 +1,15 @@
 require('dotenv').config();
 
+const connectDB = require('./config/db');
+connectDB()
+
+const appointmentModel = require('./models/appointment');
+const patientModel = require('./models/patient');
+const recordModel = require('./models/record');
+const staffModel = require('./models/staff');
+
+
+
 const IndexController = require('./controllers/index')
 
 const express = require('express');
