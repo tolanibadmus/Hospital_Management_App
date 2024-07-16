@@ -1,7 +1,7 @@
 <div class="grid-container">
   <div class="grid-item">
     <span class="item-content">Total Patients</span>
-    <span class="item-content-bold">24</span>
+    <span class="item-content-bold"><%= totalPatients %></span>
   </div>
 
   <div class="grid-item">
@@ -26,39 +26,24 @@
         <th>Email Address</th>
         <th>Next of Kin</th>
         <th>Allergy</th>
-        <th>Appointment Date</th>
+        <th>Date of Birth</th>
+        <th>Created At</th>
         <th>Action</th>
       </tr>
-      <tr>
-        <td>Akin</td>
-        <td>Fakorede</td>
-        <td>Male</td>
-        <td>akinfako@gmail.com</td>
-        <td>Sola Fakorede</td>
-        <td>None</td>
-        <td>10/08/2024</td>
-        <td><a href="" class="anchor-link">View more</a></td>
-      </tr>
-      <tr>
-          <td>Akin</td>
-          <td>Fakorede</td>
-          <td>Male</td>
-          <td>akinfako@gmail.com</td>
-          <td>Sola Fakorede</td>
-          <td>None</td>
-          <td>10/08/2024</td>
-          <td><a href="" class="anchor-link">View more</a></td>
-        </tr>
+      <% displayedPatients.forEach(displayedPatient => { %>
         <tr>
-          <td>Akin</td>
-          <td>Fakorede</td>
-          <td>Male</td>
-          <td>akinfako@gmail.com</td>
-          <td>Sola Fakorede</td>
-          <td>None</td>
-          <td>10/08/2024</td>
-          <td><a href="" class="anchor-link">View more</a></td>
+          <td><%= displayedPatient.firstName %></td>
+          <td><%= displayedPatient.lastName %></td>
+          <td><%= displayedPatient.gender %></td>
+          <td><%= displayedPatient.emailAddress %></td>
+          <td><%= displayedPatient.nextOfKin %></td>
+          <td><%= displayedPatient.allergies %></td>
+          <td><%= formatDate(displayedPatient.dob) %></td>
+          <td><%= formatDate(displayedPatient.createdAt) %></td>
+          <td><a href="/patients/<%= displayedPatient._id %>" class="anchor-link">View more</a></td>
         </tr>
+      <% }) %>
+
     </tbody>
     
 </table>

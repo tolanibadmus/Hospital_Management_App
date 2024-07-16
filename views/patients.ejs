@@ -1,7 +1,7 @@
 <div class="all-patients">
   <div class="title-wrapper">
-    <p>All Patients</p>
-    <a href="/registerPatient" class="primary-button">Register New Patient</a>
+    <p class="all-patients-p">All Patients</p>
+    <a href="/patients/add" class="primary-button">Register New Patient</a>
   </div>
 
   <table>
@@ -13,40 +13,25 @@
         <th>Email Address</th>
         <th>Next of Kin</th>
         <th>Allergy</th>
-        <th>Appointment Date</th>
+        <th>Date of Birth</th>
+        <th>Created At</th>
         <th>Action</th>
       </tr>
+
+      <% registeredPatients.forEach(registeredPatient => { %>
       <tr>
-        <td>Akin</td>
-        <td>Fakorede</td>
-        <td>Male</td>
-        <td>akinfako@gmail.com</td>
-        <td>Sola Fakorede</td>
-        <td>None</td>
-        <td>10/08/2024</td>
-        <td><a href="" class="anchor-link">View more</a></td>
+          <td><%= registeredPatient.firstName %></td>
+          <td><%= registeredPatient.lastName %></td>
+          <td><%= registeredPatient.gender %></td>
+          <td><%= registeredPatient.emailAddress %></td>
+          <td><%= registeredPatient.nextOfKin %></td>
+          <td><%= registeredPatient.allergies %></td>
+          <td><%= formatDate(registeredPatient.dob) %></td>
+          <td><%= formatDate(registeredPatient.createdAt) %></td>
+          <td><a href="/patients/<%= registeredPatient._id %>" class="anchor-link">View more</a></td>
       </tr>
-      <tr>
-          <td>Akin</td>
-          <td>Fakorede</td>
-          <td>Male</td>
-          <td>akinfako@gmail.com</td>
-          <td>Sola Fakorede</td>
-          <td>None</td>
-          <td>10/08/2024</td>
-          <td><a href="" class="anchor-link">View more</a></td>
-        </tr>
-        <tr>
-          <td>Akin</td>
-          <td>Fakorede</td>
-          <td>Male</td>
-          <td>akinfako@gmail.com</td>
-          <td>Sola Fakorede</td>
-          <td>None</td>
-          <td>10/08/2024</td>
-          <td><a href="" class="anchor-link">View more</a></td>
-        </tr>
+      <% }) %>
     </tbody>
   </table>
 </div>
-    
+

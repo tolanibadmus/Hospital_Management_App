@@ -3,11 +3,10 @@ const expressLayouts = require('express-ejs-layouts')
 const connectDB = require('./config/db');
 connectDB()
 
-const appointmentModel = require('./models/appointment');
-const patientModel = require('./models/patient');
-const recordModel = require('./models/record');
-const staffModel = require('./models/staff');
-
+require('./models/appointment');
+require('./models/patient');
+require('./models/record');
+require('./models/staff');
 
 
 const indexController = require('./controllers/index')
@@ -24,9 +23,11 @@ app.use(expressLayouts)
 
 
 app.get("/", indexController.loadHomePage)
-app.get("/viewPatients", patientController.viewPatients)
-app.get("/registerPatient", patientController.registerNewPatient)
-app.get("/viewStaff", staffContoller.viewStaff)
-app.get("/addNewStaff", staffContoller.addNewStaff)
+app.get("/patients", patientController.viewPatients)
+app.get("/patients/add", patientController.loadRegisterPatient)
+app.post("/patients/add", patientController.registerNewPatient )
+app.get("/patients/:id", patientController.viewOnePatient)
+app.get("/staff", staffContoller.viewStaff)
+app.get("/staff/add", staffContoller.addNewStaff)
 
 app.listen(8080)

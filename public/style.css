@@ -39,7 +39,6 @@ p {
 
 .side-nav {
   background-color: rgb(05, 30, 36);
-  color: white;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -52,12 +51,17 @@ p {
 
 .nav-container {
   list-style-type: none;
-  padding: 0px 20px;
+  padding: 8px 20px;
   margin: 0px;
 }
 
 .nav-btn {
   padding: 24px 8px;
+  color: white;
+}
+
+.nav-btn:hover {
+  background-color: rgb(1, 41, 41);
 }
 
 .nav-link {
@@ -112,10 +116,26 @@ p {
   margin-left: 228px;
 }
 
-.all-patients p {
+.all-patients-p, .all-staff-p, .patient-p {
   color:rgb(70, 191, 150);
   font-size: 18px;
   font-weight: 600;
+}
+
+.one-patient {
+  background-color: white;
+  border: none;
+  border-radius: 12px;
+  display: flex;
+  padding: 28px 48px;
+  margin-top: 20px;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 40px;
+  width: 500px;
 
 }
 
@@ -166,7 +186,7 @@ form {
   margin: 6px 0;
 }
 
-input{
+input, .gender-dropdown{
   margin-bottom: 12px;
   margin-top: 8px;
   padding: 0px 12px;
@@ -185,11 +205,17 @@ input{
   color: white;
   border: none;
   border-radius: 6px;
+  cursor: pointer;
+}
+
+.primary-button:hover {
+  background-color: rgb(1, 60, 60);
 }
 
 .primary-button-submit {
   margin-top: 24px;
 }
+
 
 .title-wrapper {
   display: flex;
@@ -202,4 +228,25 @@ input{
   color: white;
   cursor: pointer;
   text-decoration: none;
+}
+
+.patient-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 100px;
+}
+
+.patient-content-bold {
+  color: black;
+  font-size: 20px;
+  font-weight: 500;
+  display: flex;
+  margin-top: 16px;
+}
+
+.patient-content-regular {
+  color: grey;
+  font-size: 20px;
+  font-weight: 400;
+  display: flex;
 }
