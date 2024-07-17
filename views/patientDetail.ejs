@@ -1,0 +1,87 @@
+<div class="all-patients">
+  <div class="title-wrapper">
+    <span class="patient-p">
+      <%= registeredPatient.firstName %>
+      <%= registeredPatient.lastName %>
+    </span>
+    <a href="/patients/<%= registeredPatient._id %>/appointment" class="primary-button">Book an Appointment</a>
+  </div>
+
+  <div class="tab-container">
+    <div class="tabs">
+      <button class="tab-button active" id="biodataTabLink" onclick="switchPatientDetailTab('biodataTabLink', 'biodataTabContent')">Biodata</button>
+      <button class="tab-button" id="appointmentsTabLink" onclick="switchPatientDetailTab('appointmentsTabLink', 'appointmentsTabContent')">Appointments</button>
+    </div>
+    <div class="tab-content">
+      <div  id="biodataTabContent" class="tab-panel active">
+        <div class="patient-grid">
+          <div class="content-wrapper">
+            <p class="patient-content-regular">First name</p>
+            <p class="patient-content-bold"><%= registeredPatient.firstName %></p>
+          </div>
+      
+          <div class="content-wrapper">
+            <p class="patient-content-regular">Last name</p>
+            <p class="patient-content-bold"><%= registeredPatient.lastName %></p>
+          </div>
+    
+          <div class="content-wrapper">
+            <p class="patient-content-regular">Gender</p>
+            <p class="patient-content-bold"><%= registeredPatient.gender %></p>
+          </div>
+    
+          <div class="content-wrapper">
+            <p class="patient-content-regular">Date of birth</p>
+            <p class="patient-content-bold"><%= formatDate(registeredPatient.dob) %></p>
+          </div>
+    
+          <div class="content-wrapper">
+            <p class="patient-content-regular">Email address</p>
+            <p class="patient-content-bold"><%= registeredPatient.emailAddress %></p>
+          </div>
+    
+          <div class="content-wrapper">
+            <p class="patient-content-regular">Address</p>
+            <p class="patient-content-bold"><%= registeredPatient.address %></p>
+          </div>
+    
+          <div class="content-wrapper">
+            <p class="patient-content-regular"><%= registeredPatient.occupation %></p>
+            <p class="patient-content-bold">Baker</p>
+          </div>
+    
+          <div class="content-wrapper">
+            <p class="patient-content-regular">Next of kin</p>
+            <p class="patient-content-bold"><%= registeredPatient.nextOfKin %></p>
+          </div>
+    
+          <div class="content-wrapper">
+            <p class="patient-content-regular">Allergies</p>
+            <p class="patient-content-bold"><%= registeredPatient.allergies %></p>
+          </div>
+        </div>
+      </div>
+  
+      <div id="appointmentsTabContent" class="tab-panel">
+        <table>
+          <tbody>
+            <tr>
+              <th>Appointment Date</th>
+              <th>Reason for Appointment</th>
+              <th>Action</th>
+            </tr>
+      
+            <% patientAppointments.forEach(patientAppointment => { %>
+            <tr>
+                <td><%= formatDate(patientAppointment.date) %></td>
+                <td><%= patientAppointment.reasonForAppointment %></td>
+                <td><a href="/appointments/<%= patientAppointment._id %>/record" class="anchor-link">Document for Patient</a></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+   
+</div>

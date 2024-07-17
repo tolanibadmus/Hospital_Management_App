@@ -3,24 +3,29 @@
   <p>Fill in the right information about the new staff in the fields below.</p>
 
   <div>
-    <form action="/addStaff" method="POST">
+    <form action="/staff/add" method="POST">
       <label for="firstNameInput">First Name</label>
-      <input type="text" id="firstNameInput">
+      <input type="text" name="firstName">
 
       <label for="lastNameInput">last Name</label>
-      <input type="text" id="lastNameInput">
+      <input type="text" name="lastName">
 
       <label for="gender">Input Gender</label>
-      <input type="text" id="gender">
+      <select name="gender" class="gender-dropdown">
+        <option value="" disabled selected>Select Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="nonbinary">Non Binary</option>
+      <select>
 
       <label for="email">Input Email Address</label>
-      <input type="email" id="email">
+      <input type="email" name="email">
 
       <label for="department">Input Department</label>
-      <input type="text" id="department">
+      <input type="text" name="department">
 
       <label for="qualification">Input Educational Qualification(s)</label>
-      <input type="text" id="qualification">
+      <input type="text" name="qualification">
 
       <button type="submit" class="primary-button primary-button-submit">Add New Staff</button>
     </form>

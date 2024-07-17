@@ -12,6 +12,8 @@ require('./models/staff');
 const indexController = require('./controllers/index')
 const patientController = require('./controllers/patient')
 const staffContoller = require('./controllers/staff')
+const appointmentController = require('./controllers/appointment')
+const recordController = require('./controllers/record')
 
 const express = require('express');
 const app = express();
@@ -28,6 +30,12 @@ app.get("/patients/add", patientController.loadRegisterPatient)
 app.post("/patients/add", patientController.registerNewPatient )
 app.get("/patients/:id", patientController.viewOnePatient)
 app.get("/staff", staffContoller.viewStaff)
-app.get("/staff/add", staffContoller.addNewStaff)
-
+app.get("/staff/add", staffContoller.loadAddStaffForm)
+app.post("/staff/add", staffContoller.addNewStaff)
+app.get("/staff/:id", staffContoller.viewOneStaff)
+app.get("/patients/:id/appointment", appointmentController.loadAppointmentForm)
+app.post("/patients/:id/appointment", appointmentController.bookAppointment)
+app.get("/appointments", appointmentController.getPatientsAppointments)
+app.get("/appointments/:id/record", recordController.getPatientRecord)
+app.post("/appointments/:id/record", recordController.appointmentDocumentation)
 app.listen(8080)

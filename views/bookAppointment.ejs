@@ -1,0 +1,16 @@
+<div class="register-div">
+  <h1>Book Appointment </h1>
+  <p>Kindly book an appointment date and a reason for appointment</p>
+
+  <div>
+    <form action="/patients/<%= patientId %>/appointment" method="POST">
+      <label for="appointmentDate">Appointment Date</label>
+      <input type="date" name="appointmentDate" required>
+
+      <label for="apptReason">Reason for Appointment</label>
+      <textarea name="apptReason" cols="20" rows="8"></textarea>
+
+      <button type="submit" class="primary-button primary-button-submit">Book an Appointment</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<div class="all-patients">
+  <div class="title-wrapper">
+    <span class="patient-p">
+      Patient's Name
+    </span>
+  </div>
+  <h1>Patient's Documentation </h1>
+  <p>Kindly document patient's care appropriately.</p>
+
+  <div class="vert-tab-container">
+    <div class="vert-tab-buttons">
+        <button id="historyTabLink" class="vert-tab-button active" onclick="openRecordTab('historyTabLink', 'historyTabContent')">Health History</button>
+        <button id="nurseTabLink" class="vert-tab-button" onclick="openRecordTab('nurseTabLink', 'nurseTabContent')">Nurse Documentation</button>
+        <button id="docTabLink" class="vert-tab-button" onclick="openRecordTab('docTabLink', 'docTabContent')">Doctor Documentation</button>
+        <button id="pharmTabLink" class="vert-tab-button" onclick="openRecordTab('pharmTabLink', 'pharmTabContent')">Pharm Documentation</button>
+        <button id="labTabLink"class="vert-tab-button" onclick="openRecordTab('labTabLink', 'labTabContent')">Lab Documentation</button>
+    </div>
+    <div class="vert-tab-content">
+        <div id="historyTabContent" class="tab-pane active">
+          <form action="/appointments/<%= appointmentId %>/record" method="POST">
+            <label for="healthHistoryDocumentation">Document Health History</label>
+            <textarea name="healthHistoryDocumentation" cols="20" rows="20">
+              <% if (appointmentRecord) { %>
+                <%= appointmentRecord.healthHistory%>
+              <% } %>
+            </textarea>
+            <button type="submit" class="primary-button primary-button-submit">Update Documentation</button>
+          </form>
+        </div>
+        <div id="nurseTabContent" class="tab-pane">
+          <form action="/appointments/<%= appointmentId %>/record" method="POST">
+            <label for="nurseDocumentation">Nurse Documentation</label>
+            <textarea name="nurseDocumentation" cols="20" rows="20">
+              <% if (appointmentRecord) { %>
+                <%= appointmentRecord.nurseDocumentation%>
+              <% } %>
+            </textarea>
+            <button type="submit" class="primary-button primary-button-submit">Update Documentation</button>
+          </form>
+        </div>
+        <div id="docTabContent" class="tab-pane">
+          <form action="/appointments/<%= appointmentId %>/record" method="POST">
+            <label for="doctorDocumentation">Doctor Treatment Plan</label>
+            <textarea name="doctorDocumentation" cols="20" rows="20">
+              <% if (appointmentRecord) { %>
+                <%= appointmentRecord.doctorDocumentation%>
+              <% } %>
+            </textarea>
+            <button type="submit" class="primary-button primary-button-submit">Update Documentation</button>
+          </form>
+        </div>
+        <div id="pharmTabContent" class="tab-pane">
+          <form action="/appointments/<%= appointmentId %>/record" method="POST">
+            <label for="pharmDocumentation">Pharmacy Drug Documentation </label>
+            <textarea name="pharmDocumentation" cols="20" rows="20">
+              <% if (appointmentRecord) { %>
+                <%= appointmentRecord.pharmacyDocumentation%>
+              <% } %>
+            </textarea>
+            <button type="submit" class="primary-button primary-button-submit">Update Documentation</button>
+          </form>
+        </div>
+        <div id="labTabContent" class="tab-pane">
+          <form action="/appointments/<%= appointmentId %>/record" method="POST">
+            <label for="labDocumentation">Lab Test Documentation</label>
+            <textarea name="labDocumentation" cols="20" rows="20">
+              <% if (appointmentRecord) { %>
+                <%= appointmentRecord.labDocumentation%>
+              <% } %>
+            </textarea>
+            <button type="submit" class="primary-button primary-button-submit">Update Documentation</button>
+          </form>
+      </div>
+    </div>
+</div>
+</div>

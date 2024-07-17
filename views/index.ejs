@@ -6,12 +6,12 @@
 
   <div class="grid-item">
     <span class="item-content">Total Appointments</span>
-    <span class="item-content-bold">24</span>
+    <span class="item-content-bold"><%= totalAppointments %></span>
   </div>
 
   <div class="grid-item">
     <span class="item-content">Total Staff</span>
-    <span class="item-content-bold">24</span>
+    <span class="item-content-bold"><%= totalStaff %></span>
   </div>
 </div>
 
@@ -27,7 +27,7 @@
         <th>Next of Kin</th>
         <th>Allergy</th>
         <th>Date of Birth</th>
-        <th>Created At</th>
+        <th>Registered At</th>
         <th>Action</th>
       </tr>
       <% displayedPatients.forEach(displayedPatient => { %>

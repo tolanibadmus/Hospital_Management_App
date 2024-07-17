@@ -1,0 +1,24 @@
+<div class="all-patients">
+  <div class="title-wrapper">
+    <p class="all-patients-p">All Appointments</p>
+  </div>
+
+  <table>
+    <tbody>
+      <tr>
+        <th>Appointment Date</th>
+        <th>Reason for Appointment</th>
+        <th>Action</th>
+      </tr>
+
+      <% patientsAppointments.forEach(patientsAppointment => { %>
+        <tr>
+          <td><%= formatDate(patientsAppointment.date) %></td>
+          <td><%= patientsAppointment.reasonForAppointment %></td>
+          <td><a href="/appointments/<%= patientsAppointment._id %>/record" class="anchor-link">Document for Patient</a></td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+

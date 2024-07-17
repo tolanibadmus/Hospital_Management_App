@@ -15,33 +15,17 @@
         <th>Qualification</th>
         <th>Action</th>
       </tr>
-      <tr>
-        <td>Ayo</td>
-        <td>Olaiya</td>
-        <td>Female</td>
-        <td>ayoolaiya@gmail.com</td>
-        <td>Clinical Nursing</td>
-        <td>RN</td>
-        <td><a href="" class="anchor-link">View more</a></td>
-      </tr>
-      <tr>
-        <td>Ayo</td>
-        <td>Olaiya</td>
-        <td>Female</td>
-        <td>ayoolaiya@gmail.com</td>
-        <td>Clinical Nursing</td>
-        <td>RN</td>
-        <td><a href="" class="anchor-link">View more</a></td>
-        </tr>
+      <% allStaff.forEach(staff => { %>
         <tr>
-          <td>Ayo</td>
-          <td>Olaiya</td>
-          <td>Female</td>
-          <td>ayoolaiya@gmail.com</td>
-          <td>Clinical Nursing</td>
-          <td>RN</td>
-          <td><a href="" class="anchor-link">View more</a></td>
+          <td><%= staff.firstName %></td>
+          <td><%= staff.lastName %></td>
+          <td><%= staff.gender %></td>
+          <td><%= staff.emailAddress %></td>
+          <td><%= staff.department %></td>
+          <td><%= staff.qualification %></td>
+          <td><a href="/staff/<%= staff._id %>" class="anchor-link">View more</a></td>
         </tr>
+      <% }) %>
     </tbody>
   </table>
 </div>

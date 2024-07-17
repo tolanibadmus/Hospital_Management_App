@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
+const { ObjectId } = mongoose.Types
 const PatientModel = mongoose.model('Patient')
+const AppointmentModel = mongoose.model('Appointment')
 
 function formatDate(date) {
   const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
@@ -54,10 +56,15 @@ async function registerNewPatient(req, res) {
 async function viewOnePatient(req, res){
   const id = (req.params.id);
   const registeredPatient = await PatientModel.findById({_id: id})
-  res.render('onePatient.ejs', {
+  const patientAppointments = await AppointmentModel.find({
+    patientId: new ObjectId(req.params.id)
+  })
+
+  res.render('patientDetail.ejs', {
     layout: './layouts/dashboard', 
     title: 'Patients',
     registeredPatient,
+    patientAppointments,
     formatDate
   })
 }
