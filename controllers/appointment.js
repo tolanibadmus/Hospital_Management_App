@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types
 const AppointmentModel = mongoose.model('Appointment')
-// const PatientModel = mongoose.model('Patient')
 
 
 function formatDate(date) {

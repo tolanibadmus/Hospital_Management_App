@@ -186,7 +186,7 @@ form {
   margin: 6px 0;
 }
 
-input, .gender-dropdown{
+input, .gender-dropdown, .dept-dropdown{
   margin-bottom: 12px;
   margin-top: 8px;
   padding: 0px 12px;

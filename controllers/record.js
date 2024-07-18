@@ -1,17 +1,29 @@
 const mongoose = require('mongoose')
 const { ObjectId } = mongoose.Types
 const RecordModel = mongoose.model('Record')
+const AppointmentModel = mongoose.model('Appointment')
+const PatientModel = mongoose.model('Patient')
 
 
 async function getPatientRecord(req, res){
   const appointmentRecord = await RecordModel.findOne({
     appointmentId: req.params.id
   })
+
+  const appointment = await AppointmentModel.findOne({
+    _id : req.params.id
+  })
+
+  const patient = await PatientModel.findOne({
+    _id: appointment.patientId
+  })
+
   res.render('record.ejs', {
     layout: './layouts/dashboard', 
     title: 'Patients',
     appointmentId: req.params.id,
-    appointmentRecord
+    appointmentRecord,
+    patient
   })
 }
 
@@ -52,6 +64,8 @@ async function appointmentDocumentation(req,res){
     console.log('Patient not registered.')
   }
 }
+
+
 
 
 module.exports = {
