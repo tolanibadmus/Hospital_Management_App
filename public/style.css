@@ -170,6 +170,44 @@ tr {
   color: rgb(3, 36, 45);
 }
 
+
+.anchor-link-edit {
+  color: rgb(3, 90, 90);
+  background-color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.anchor-link-edit:hover {
+  color: rgb(3, 36, 45);
+}
+
+.anchor-link-delete {
+  color: rgb(154, 3, 3);
+  background-color: white;
+  border: none;
+  font-size: 16px;
+  margin-left: 20px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.anchor-link-delete:hover {
+  color: rgb(85, 2, 2);
+}
+
+.anchor-link-form {
+  margin: 0px;
+}
+
+.anchor-link-wrapper {
+  display: flex
+}
+
 form {
   margin-top: 24px;
   display: flex;
@@ -239,7 +277,7 @@ textarea:focus {
   margin-bottom: 24px;
 }
 
-.title-wrapper a {
+.title-wrapper .primary-button-anchor {
   color: white;
   cursor: pointer;
   text-decoration: none;
@@ -377,4 +415,22 @@ textarea:focus {
 
 .tab-pane.active {
   display: block;
+}
+
+.back-link {
+  color:rgb(3, 90, 90) ;
+  cursor: pointer;
+  margin-bottom: 44px;
+  font-weight: 700;
+  
+}
+
+.back-link:hover {
+  color:rgb(1, 60, 60) ;
+  cursor: pointer;
+}
+
+.record-p {
+  display: flex;
+  flex-direction: column;
 }

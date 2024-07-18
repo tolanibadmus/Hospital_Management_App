@@ -43,10 +43,21 @@ async function addNewStaff (req, res){
   }
 }
 
+async function deleteSingleStaff(req, res){
+  try {
+    const id = (req.params.id)
+    await staffModel.deleteOne({_id: id})
+    res.redirect('/staff')
+  } catch(err){
+    console.log(err)
+  }
+}
+
 
 module.exports = {
   viewStaff,
   viewOneStaff,
   addNewStaff,
-  loadAddStaffForm
+  loadAddStaffForm,
+  deleteSingleStaff
 }

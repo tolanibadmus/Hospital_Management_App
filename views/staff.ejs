@@ -1,7 +1,7 @@
 <div class="all-patients">
   <div class="title-wrapper">
     <p class="all-staff-p">All Staff</p>
-    <a href="/staff/add" class="primary-button">Add New staff</a>
+    <a href="/staff/add" class="primary-button primary-button-anchor">Add New staff</a>
   </div>
 
   <table>
@@ -23,7 +23,19 @@
           <td><%= staff.emailAddress %></td>
           <td><%= staff.department %></td>
           <td><%= staff.qualification %></td>
-          <td><a href="/staff/<%= staff._id %>" class="anchor-link">View more</a></td>
+          <td>
+            <span class="anchor-link-wrapper">
+              <form action ="/staff/<%= staff._id %>/delete" method="POST" class="anchor-link-form"></form>
+                <button class="anchor-link-edit" type="submit">Edit</button>
+              </form>
+              <form action ="/staff/<%= staff._id %>/delete" method="POST" class="anchor-link-form">
+                <button class="anchor-link-delete" type="submit">Delete</button>
+              </form>
+            </span>
+           
+          </td>
+          
+          <!-- <td><a href="/staff/<%= staff._id %>" class="anchor-link">View more</a></td> -->
         </tr>
       <% }) %>
     </tbody>
