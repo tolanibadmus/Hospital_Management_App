@@ -25,9 +25,7 @@
           <td><%= staff.qualification %></td>
           <td>
             <span class="anchor-link-wrapper">
-              <form action ="/staff/<%= staff._id %>/delete" method="POST" class="anchor-link-form"></form>
-                <button class="anchor-link-edit" type="submit">Edit</button>
-              </form>
+              <a href="/staff/<%= staff._id %>/update" class="anchor-link">Edit</a>
               <form action ="/staff/<%= staff._id %>/delete" method="POST" class="anchor-link-form">
                 <button class="anchor-link-delete" type="submit">Delete</button>
               </form>
@@ -35,6 +33,9 @@
            
           </td>
           
+          <!-- <form action ="/staff/<%= staff._id %>/update" method="POST" class="anchor-link-form"></form>
+                <button class="anchor-link-edit" type="submit">Edit</button>
+              </form> -->
           <!-- <td><a href="/staff/<%= staff._id %>" class="anchor-link">View more</a></td> -->
         </tr>
       <% }) %>

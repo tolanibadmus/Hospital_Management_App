@@ -39,24 +39,24 @@ p {
 
 .side-nav {
   background-color: rgb(05, 30, 36);
+  padding-top: 80px;
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   z-index: 100;
-  padding: 60px 20px 0 0;
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
   z-index: 99;
 }
 
 .nav-container {
   list-style-type: none;
-  padding: 8px 20px;
+  padding: 0px;
   margin: 0px;
 }
 
 .nav-btn {
-  padding: 24px 8px;
+  padding: 24px 40px;
   color: white;
 }
 
@@ -190,7 +190,6 @@ tr {
   background-color: white;
   border: none;
   font-size: 16px;
-  margin-left: 20px;
   cursor: pointer;
   text-decoration: none;
   font-weight: 700;
@@ -205,7 +204,11 @@ tr {
 }
 
 .anchor-link-wrapper {
-  display: flex
+  display: flex;
+  justify-content: space-between ;
+  align-items: center;
+  width: 120px;
+  
 }
 
 form {
@@ -224,7 +227,7 @@ form {
   margin: 6px 0;
 }
 
-input, .gender-dropdown, .dept-dropdown{
+input, .gender-dropdown, .dept-dropdown, .textarea-input{
   margin-bottom: 12px;
   margin-top: 8px;
   padding: 0px 12px;

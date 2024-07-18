@@ -53,11 +53,57 @@ async function deleteSingleStaff(req, res){
   }
 }
 
+async function updateSingleStaff(req,res){
+  const id = (req.params.id)
+  const genders = ['Male', 'Female', 'Non Binary']
+  const departments = ['Nursing', 'Records', 'Pharmacy', 'Laboratory', 'Medicine', 'Physiotherapy']
+  const singleStaff = await staffModel.findById({_id: id})
+  res.render('updateStaff.ejs', {
+    layout: './layouts/dashboard', 
+    title: 'Staff',
+    singleStaff,
+    departments,
+    genders
+  })
+}
+
+async function updateStaff(req,res){
+  let staffRecord
+  const existingStaffRecord = await staffModel.findOne({
+    _id: req.params.id
+  })
+  if (existingStaffRecord) {
+    staffRecord = await staffModel.findOneAndUpdate(
+      {
+        _id: req.params.id
+      },
+      {
+        $set: {
+          firstName: req.body.firstName ? req.body.firstName.trim() : '' ,
+          lastName: req.body.lastName ? req.body.lastName.trim() : '' ,
+          gender: req.body.gender ? req.body.gender.trim() : '' ,
+          emailAddress: req.body.email ? req.body.email.trim() : '' ,
+          department: req.body.department ? req.body.department.trim() : '' ,
+          qualification: req.body.qualification ? req.body.qualification.trim() : ''
+        }
+      }
+    )
+  } 
+
+  if(staffRecord){
+    res.redirect(`/staff`)
+  } else {
+    console.log('Patient not registered.')
+  }
+}
+
 
 module.exports = {
   viewStaff,
   viewOneStaff,
   addNewStaff,
   loadAddStaffForm,
-  deleteSingleStaff
+  deleteSingleStaff,
+  updateSingleStaff,
+  updateStaff
 }
