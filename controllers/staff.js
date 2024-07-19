@@ -17,15 +17,6 @@ async function viewStaff (req, res) {
   })
 }
 
-async function viewOneStaff (req, res) {
-  const id = (req.params.id)
-  const oneStaff = await staffModel.findById({_id: id})
-  res.render('staffDetail.ejs', {
-    layout: './layouts/dashboard', 
-    title: 'Staff',
-    oneStaff
-  })
-}
 
 async function addNewStaff (req, res){
   const addStaff = await staffModel.create({
@@ -100,7 +91,6 @@ async function updateStaff(req,res){
 
 module.exports = {
   viewStaff,
-  viewOneStaff,
   addNewStaff,
   loadAddStaffForm,
   deleteSingleStaff,

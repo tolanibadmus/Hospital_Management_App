@@ -39,20 +39,26 @@ p {
 
 .side-nav {
   background-color: rgb(05, 30, 36);
-  padding-top: 80px;
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   z-index: 100;
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-  z-index: 99;
+  /* z-index: 99; */
+}
+
+.logo-icon {
+  width: 48px;
+  margin: 16px 40px;
 }
 
 .nav-container {
   list-style-type: none;
   padding: 0px;
   margin: 0px;
+  margin-bottom: 400px;
+  margin-top: 40px;
 }
 
 .nav-btn {
@@ -436,4 +442,10 @@ textarea:focus {
 .record-p {
   display: flex;
   flex-direction: column;
+}
+
+.log-out-button {
+  color: rgb(244, 97, 97);
+  padding: 24px 40px;
+  margin-top: 200px;
 }
