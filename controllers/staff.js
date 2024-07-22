@@ -1,9 +1,10 @@
 const mongoose = require('mongoose')
 const staffModel = mongoose.model('Staff')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken');
 
-function loadAddStaffForm(req, res){
-  res.render('addStaff.ejs', {
+function loadRegisterStaffForm(req, res){
+  res.render('registerStaff.ejs', {
     layout: './layouts/dashboard', 
     title: 'Add New Staff' 
   })
@@ -32,8 +33,9 @@ function loadEmptyState(req,res){
 }
 
 
-async function addNewStaff (req, res){
-  const hashedPassword = await bcrypt.hash(req.body.password, 10)
+async function registerStaff (req, res){
+  const defaultPassword = process.env.DEFAULT_PASSWORD
+  const hashedPassword = await bcrypt.hash(defaultPassword, 10)
   const existingStaff = await staffModel.findOne({emailAddress: req.body.email})
   if(existingStaff){
     return res.send('Email address has been used by another user.')
@@ -79,61 +81,27 @@ async function loadUpdateStaffForm(req,res){
 }
 
 async function updateStaff(req,res){
-  let staffRecord
-  const existingStaffRecord = await staffModel.findOne({
-    _id: req.params.id
-  })
-  if (existingStaffRecord) {
-    staffRecord = await staffModel.findOneAndUpdate(
-      {
-        _id: req.params.id
-      },
-      {
-        $set: {
-          firstName: req.body.firstName ? req.body.firstName.trim() : '' ,
-          lastName: req.body.lastName ? req.body.lastName.trim() : '' ,
-          gender: req.body.gender ? req.body.gender.trim() : '' ,
-          emailAddress: req.body.email ? req.body.email.trim() : '' ,
-          department: req.body.department ? req.body.department.trim() : '' ,
-          qualification: req.body.qualification ? req.body.qualification.trim() : ''
-        }
+
+  const staffRecord = await staffModel.findOneAndUpdate(
+    {
+      _id: req.params.id
+    },
+    {
+      $set: {
+        firstName: req.body.firstName ? req.body.firstName.trim() : '' ,
+        lastName: req.body.lastName ? req.body.lastName.trim() : '' ,
+        gender: req.body.gender ? req.body.gender.trim() : '' ,
+        emailAddress: req.body.email ? req.body.email.trim() : '' ,
+        department: req.body.department ? req.body.department.trim() : '' ,
+        qualification: req.body.qualification ? req.body.qualification.trim() : ''
       }
-    )
-  } 
+    }
+  )
 
   if(staffRecord){
     res.redirect(`/staff`)
   } else {
     console.log('Patient not registered.')
-  }
-}
-
-
-function registerStaffForm(req, res){
-  res.render('registerStaff.ejs', {
-    layout: './layouts/page',
-  })
-}
-
-async function registerStaff(req, res){
-  const hashedPassword = await bcrypt.hash(req.body.password, 10)
-  const existingStaff = await staffModel.findOne({emailAddress: req.body.email})
-  if(existingStaff){
-    return res.send('Email address has been used by another user.')
-  }
-  const registerStaff = await staffModel.create({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    gender: req.body.gender,
-    emailAddress: req.body.email,
-    department: req.body.department,
-    qualification: req.body.qualification,
-    password: hashedPassword
-  })
-  if (registerStaff){
-    res.redirect('/')
-  } else {
-    console.log('Staff not registered.')
   }
 }
 
@@ -152,6 +120,18 @@ async function staffLogin(req, res){
 
     const isMatch = await bcrypt.compare(inputPassword, storedPassword)
     if(isMatch){
+      const jwtSecret = process.env.JWT_SECRET
+      const expirationInHours = '1000h'
+      const token = jwt.sign(
+        { 
+          email: existingStaff.emailAddress 
+        }, 
+        jwtSecret, 
+        { 
+          expiresIn: expirationInHours 
+        }
+      )
+      res.cookie('token', token)
       res.redirect('/')
     } else {
       return res.send('Incorrect password')
@@ -198,14 +178,12 @@ async function resetPassword(req, res){
 
 module.exports = {
   viewStaff,
-  addNewStaff,
-  loadAddStaffForm,
+  registerStaff,
+  loadRegisterStaffForm,
   deleteSingleStaff,
   loadUpdateStaffForm,
   updateStaff,
   loadEmptyState,
-  registerStaffForm,
-  registerStaff,
   staffLoginForm,
   staffLogin,
   loadResetPasswordForm,
