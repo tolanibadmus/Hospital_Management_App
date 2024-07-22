@@ -33,13 +33,19 @@ function loadEmptyState(req,res){
 
 
 async function addNewStaff (req, res){
+  const hashedPassword = await bcrypt.hash(req.body.password, 10)
+  const existingStaff = await staffModel.findOne({emailAddress: req.body.email})
+  if(existingStaff){
+    return res.send('Email address has been used by another user.')
+  }
   const addStaff = await staffModel.create({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     gender: req.body.gender,
     emailAddress: req.body.email,
     department: req.body.department,
-    qualification: req.body.qualification
+    qualification: req.body.qualification,
+    password: hashedPassword
   })
   if (addStaff){
     res.redirect('/staff')
@@ -156,7 +162,37 @@ async function staffLogin(req, res){
 }
 
 function loadResetPasswordForm(req, res){
+  res.render('resetPassword.ejs', {
+    layout: './layouts/page',
+  })
+}
+
+async function resetPassword(req, res){
+  const existingStaff = await staffModel.findOne({emailAddress: req.body.email})
+  const storedPassword = existingStaff.password
+  const inputPassword = req.body.currentPassword
+  const hashedNewPassword = await bcrypt.hash(req.body.newPassword, 10)
   
+
+  const isMatch = await bcrypt.compare(inputPassword, storedPassword)
+  if(isMatch){
+    await staffModel.findOneAndUpdate(
+      {
+        emailAddress: req.body.email
+      },
+      {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        gender: req.body.gender,
+        emailAddress: req.body.email,
+        department: req.body.department,
+        qualification: req.body.qualification,
+        password: hashedNewPassword
+      }
+    )
+  
+    res.redirect('/')
+  } 
 }
 
 
@@ -171,5 +207,7 @@ module.exports = {
   registerStaffForm,
   registerStaff,
   staffLoginForm,
-  staffLogin
+  staffLogin,
+  loadResetPasswordForm,
+  resetPassword
 }
