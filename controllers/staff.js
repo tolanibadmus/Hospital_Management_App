@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const staffModel = mongoose.model('Staff')
+const bcrypt = require('bcrypt')
 
 function loadAddStaffForm(req, res){
   res.render('addStaff.ejs', {
@@ -9,11 +10,24 @@ function loadAddStaffForm(req, res){
 }
 
 async function viewStaff (req, res) {
+  const staffCount = await staffModel.countDocuments()
   const allStaff = await staffModel.find()
-  res.render('staff.ejs', {
+  if(staffCount === 0){
+    res.redirect('/staff/emptyState')
+  } else {
+    res.render('staff.ejs', {
+      layout: './layouts/dashboard', 
+      title: 'Staff',
+      allStaff
+    })
+  } 
+}
+
+function loadEmptyState(req,res){
+  res.render('emptyState.ejs', {
     layout: './layouts/dashboard', 
     title: 'Staff',
-    allStaff
+    content: 'All your added staff will be displayed here.'
   })
 }
 
@@ -44,7 +58,7 @@ async function deleteSingleStaff(req, res){
   }
 }
 
-async function updateSingleStaff(req,res){
+async function loadUpdateStaffForm(req,res){
   const id = (req.params.id)
   const genders = ['Male', 'Female', 'Non Binary']
   const departments = ['Nursing', 'Records', 'Pharmacy', 'Laboratory', 'Medicine', 'Physiotherapy']
@@ -89,11 +103,73 @@ async function updateStaff(req,res){
 }
 
 
+function registerStaffForm(req, res){
+  res.render('registerStaff.ejs', {
+    layout: './layouts/page',
+  })
+}
+
+async function registerStaff(req, res){
+  const hashedPassword = await bcrypt.hash(req.body.password, 10)
+  const existingStaff = await staffModel.findOne({emailAddress: req.body.email})
+  if(existingStaff){
+    return res.send('Email address has been used by another user.')
+  }
+  const registerStaff = await staffModel.create({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    gender: req.body.gender,
+    emailAddress: req.body.email,
+    department: req.body.department,
+    qualification: req.body.qualification,
+    password: hashedPassword
+  })
+  if (registerStaff){
+    res.redirect('/')
+  } else {
+    console.log('Staff not registered.')
+  }
+}
+
+function staffLoginForm(req, res){
+  res.render('staffLogin.ejs', {
+    layout: './layouts/page',
+  })
+}
+
+async function staffLogin(req, res){
+  const existingStaff = await staffModel.findOne({emailAddress: req.body.email})
+
+  if(existingStaff){
+    const storedPassword = existingStaff.password
+    const inputPassword = req.body.password
+
+    const isMatch = await bcrypt.compare(inputPassword, storedPassword)
+    if(isMatch){
+      res.redirect('/')
+    } else {
+      return res.send('Incorrect password')
+    }
+  } else {
+    return res.send('Email address does not exist.')
+  }
+}
+
+function loadResetPasswordForm(req, res){
+  
+}
+
+
 module.exports = {
   viewStaff,
   addNewStaff,
   loadAddStaffForm,
   deleteSingleStaff,
-  updateSingleStaff,
-  updateStaff
+  loadUpdateStaffForm,
+  updateStaff,
+  loadEmptyState,
+  registerStaffForm,
+  registerStaff,
+  staffLoginForm,
+  staffLogin
 }
