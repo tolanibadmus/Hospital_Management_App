@@ -13,10 +13,18 @@
       <div class="top-nav">
         <p class="page-title"><%= title %></p>
       </div>
+      
 
       <%- include('../partials/side-nav.ejs') %>
 
-      <div><%- body %></div>
+      <div class="body-element">
+        <% if (message && message.length > 0) { %>
+          <div class="flash-message">
+            <%= message %>
+          </div>
+         <% } %>
+        <%- body %>
+      </div>
     </div>
     <script src="/tabDesign.js"></script>
   </body>

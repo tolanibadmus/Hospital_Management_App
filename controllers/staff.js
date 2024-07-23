@@ -6,7 +6,8 @@ const jwt = require('jsonwebtoken');
 function loadRegisterStaffForm(req, res){
   res.render('registerStaff.ejs', {
     layout: './layouts/dashboard', 
-    title: 'Add New Staff' 
+    title: 'Add New Staff',
+    message: req.flash('message')
   })
 }
 
@@ -19,7 +20,8 @@ async function viewStaff (req, res) {
     res.render('staff.ejs', {
       layout: './layouts/dashboard', 
       title: 'Staff',
-      allStaff
+      allStaff,
+      message: req.flash('message')
     })
   } 
 }
@@ -28,31 +30,35 @@ function loadEmptyState(req,res){
   res.render('emptyState.ejs', {
     layout: './layouts/dashboard', 
     title: 'Staff',
-    content: 'All your added staff will be displayed here.'
+    content: 'All your added staff will be displayed here.',
+    message: req.flash('message')
   })
 }
 
 
 async function registerStaff (req, res){
-  const defaultPassword = process.env.DEFAULT_PASSWORD
-  const hashedPassword = await bcrypt.hash(defaultPassword, 10)
-  const existingStaff = await staffModel.findOne({emailAddress: req.body.email})
-  if(existingStaff){
-    return res.send('Email address has been used by another user.')
-  }
-  const addStaff = await staffModel.create({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    gender: req.body.gender,
-    emailAddress: req.body.email,
-    department: req.body.department,
-    qualification: req.body.qualification,
-    password: hashedPassword
-  })
-  if (addStaff){
-    res.redirect('/staff')
-  } else {
-    console.log('Staff not registered.')
+  try {
+    const defaultPassword = process.env.DEFAULT_PASSWORD
+    const hashedPassword = await bcrypt.hash(defaultPassword, 10)
+    const existingStaff = await staffModel.findOne({emailAddress: req.body.email})
+    if(existingStaff){
+      return res.send('Email address has been used by another user.')
+    }
+    const addStaff = await staffModel.create({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      gender: req.body.gender,
+      emailAddress: req.body.email,
+      department: req.body.department,
+      qualification: req.body.qualification,
+      password: hashedPassword
+    })
+    if (addStaff){
+      res.redirect('/staff')
+    }
+  } catch(err){
+    req.flash('message', 'An error occured while registering the staff.')
+    res.redirect('/staff/add')
   }
 }
 
@@ -62,7 +68,8 @@ async function deleteSingleStaff(req, res){
     await staffModel.deleteOne({_id: id})
     res.redirect('/staff')
   } catch(err){
-    console.log(err)
+    req.flash('message', 'Staff not deleted.')
+    res.redirect('/staff')
   }
 }
 
@@ -76,7 +83,8 @@ async function loadUpdateStaffForm(req,res){
     title: 'Staff',
     singleStaff,
     departments,
-    genders
+    genders,
+    message: req.flash('message')
   })
 }
 
@@ -101,13 +109,15 @@ async function updateStaff(req,res){
   if(staffRecord){
     res.redirect(`/staff`)
   } else {
-    console.log('Patient not registered.')
+    req.flash('message', 'Staff not updated at the moment..')
+    res.redirect('/staff')
   }
 }
 
 function staffLoginForm(req, res){
   res.render('staffLogin.ejs', {
     layout: './layouts/page',
+    message: req.flash('message')
   })
 }
 
@@ -134,16 +144,19 @@ async function staffLogin(req, res){
       res.cookie('token', token)
       res.redirect('/')
     } else {
-      return res.send('Incorrect password')
+      req.flash('message', 'Incorrect password!!!')
+      res.redirect('/login')
     }
   } else {
-    return res.send('Email address does not exist.')
+    req.flash('message', 'Email address does not exist!!!')
+    res.redirect('/login')
   }
 }
 
 function loadResetPasswordForm(req, res){
   res.render('resetPassword.ejs', {
     layout: './layouts/page',
+    message: req.flash('message')
   })
 }
 

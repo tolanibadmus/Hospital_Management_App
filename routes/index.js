@@ -14,7 +14,7 @@ router.get("/patients", [authMiddleware], patientController.viewPatients)
 router.get("/patients/add", [authMiddleware], patientController.loadRegisterPatient)
 router.post("/patients/add", [authMiddleware], patientController.registerNewPatient )
 router.get("/patients/:id", [authMiddleware], patientController.viewOnePatient)
-router.get("/staff",[authMiddleware], staffController.viewStaff)
+router.get("/staff", [authMiddleware], staffController.viewStaff)
 router.get("/staff/emptyState", [authMiddleware], staffController.loadEmptyState)
 router.get("/staff/add", [authMiddleware], staffController.loadRegisterStaffForm)
 router.post("/staff/add", [authMiddleware], staffController.registerStaff)
@@ -30,5 +30,7 @@ router.get("/login", staffController.staffLoginForm)
 router.post("/login", staffController.staffLogin)
 router.get("/resetPassword", [authMiddleware], staffController.loadResetPasswordForm)
 router.post("/resetPassword", [authMiddleware], staffController.resetPassword)
+
+
 
 module.exports = router

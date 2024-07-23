@@ -10,16 +10,19 @@ function formatDate(date) {
 
 
 async function bookAppointment(req, res){
-  const newAppointment = await AppointmentModel.create({
-    date: req.body.appointmentDate,
-    reasonForAppointment: req.body.apptReason,
-    patientId: new ObjectId(req.params.id)
-  })
-
-  if(newAppointment){
-    res.redirect(`/patients/${req.params.id}`)
-  } else {
-    console.log('Patient not registered.')
+  try{
+    const newAppointment = await AppointmentModel.create({
+      date: req.body.appointmentDate,
+      reasonForAppointment: req.body.apptReason,
+      patientId: new ObjectId(req.params.id)
+    })
+  
+    if(newAppointment){
+      res.redirect(`/patients/${req.params.id}`)
+    }
+  } catch (err){
+    req.flash('message', 'Error booking an appointment.')
+    res.redirect(`/patients/${req.params.id}/appointment`)
   }
 }
 
@@ -27,7 +30,8 @@ function loadAppointmentForm(req, res){
   res.render('bookAppointment.ejs', {
     layout: './layouts/dashboard', 
     title: 'Book Appointment',
-    patientId: req.params.id
+    patientId: req.params.id,
+    message: req.flash('message')
   })
 }
 
@@ -38,7 +42,8 @@ async function getPatientsAppointments(req, res){
     layout: './layouts/dashboard', 
     title: 'Appointments',
     patientsAppointments,
-    formatDate
+    formatDate,
+    message: req.flash('message')
   })
 }
 

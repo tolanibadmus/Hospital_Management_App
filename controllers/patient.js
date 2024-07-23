@@ -15,7 +15,8 @@ async function viewPatients(req, res) {
     layout: './layouts/dashboard', 
     title: 'Patients',
     registeredPatients: registeredPatients || [],
-    formatDate
+    formatDate,
+    message: req.flash('message')
   })
 }
 
@@ -24,32 +25,36 @@ async function loadRegisterPatient(req, res) {
   res.render('registerPatient.ejs', { 
     layout: './layouts/dashboard', 
     title: 'Register Patient',
+    message: req.flash('message')
   })
 }
 
 async function registerNewPatient(req, res) {
-  const existingUser = await PatientModel.findOne({
-    emailAddress: req.body.email
-  })
-  if (existingUser) {
-    return res.send('The email address has been used. Use another email address.')
-  }
-  let newPatient = await PatientModel.create({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    dob: new Date(req.body.dob),
-    gender: req.body.gender,
-    emailAddress: req.body.email,
-    address: req.body.address,
-    occupation: req.body.occupation,
-    nextOfKin: req.body.nextOfKin,
-    allergies: req.body.allergies || []
-  })
-
-  if (newPatient){
-    res.redirect('/patients')
-  } else {
-    console.log('Patient not registered.')
+  try{
+    const existingUser = await PatientModel.findOne({
+      emailAddress: req.body.email
+    })
+    if (existingUser) {
+      req.flash('message', 'The email address has been used. Use another email address.')
+    }
+    let newPatient = await PatientModel.create({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      dob: new Date(req.body.dob),
+      gender: req.body.gender,
+      emailAddress: req.body.email,
+      address: req.body.address,
+      occupation: req.body.occupation,
+      nextOfKin: req.body.nextOfKin,
+      allergies: req.body.allergies || []
+    })
+  
+    if (newPatient){
+      res.redirect('/patients')
+    }
+  } catch(err){
+    req.flash('message', 'Patient not registered.')
+    res.redirect('/patients/add')
   }
 }
 
@@ -65,7 +70,8 @@ async function viewOnePatient(req, res){
     title: 'Patients',
     registeredPatient,
     patientAppointments,
-    formatDate
+    formatDate,
+    message: req.flash('message')
   })
 }
 

@@ -25,7 +25,8 @@ async function loadHomePage(req, res) {
     formatDate,
     totalPatients,
     totalStaff,
-    totalAppointments
+    totalAppointments,
+    message: req.flash('message')
   })
 }
 

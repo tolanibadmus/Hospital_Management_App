@@ -23,7 +23,8 @@ async function getPatientRecord(req, res){
     title: 'Patients',
     appointmentId: req.params.id,
     appointmentRecord,
-    patient
+    patient,
+    message: req.flash('message')
   })
 }
 
@@ -61,7 +62,8 @@ async function appointmentDocumentation(req,res){
   if(appointmentRecord){
     res.redirect(`/appointments/${req.params.id}/record`)
   } else {
-    console.log('Patient not registered.')
+    req.flash('message', 'Patient not registered.')
+    res.redirect(`/appointments/${req.params.id}/record`)
   }
 }
 

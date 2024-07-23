@@ -7,6 +7,11 @@ body {
   margin-right: 100px;
 }
 
+.body-element {
+  padding-top: 120px;
+  margin-left: 228px;
+}
+
 a {
   text-decoration: none;
 }
@@ -22,8 +27,10 @@ p {
   font-weight: 600;
 }
 
-.body-container {
+.body-container-page {
   padding: 0px;
+  margin-top: 100px;
+  margin-left: 50px;
   background-color: rgb(234, 233, 233);
 }
 
@@ -80,8 +87,6 @@ p {
 
 .grid-container {
   display: grid;
-  padding-top: 120px;
-  margin-left: 228px;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 32px;
 }
@@ -111,7 +116,6 @@ p {
 }
 
 .patient-overview {
-  margin-left: 228px;
   margin-top: 60px;
 }
 
@@ -120,10 +124,6 @@ p {
   font-weight: 600;
 }
 
-.all-patients {
-  padding-top: 116px;
-  margin-left: 228px;
-}
 
 .all-patients-p, .all-staff-p, .patient-p {
   color:rgb(70, 191, 150);
@@ -221,7 +221,6 @@ form {
 .register-div {
   padding-left: 360px;
   margin-right: 240px;
-  padding-top: 120px;
 }
 
 .register-div h1 {
@@ -462,15 +461,10 @@ textarea:focus {
   color: rgb(30, 181, 181);
 }
 
-.empty-state {
-  padding-top: 200px;
-  margin-left: 228px;
-}
-
 .empty-state-container {
   display: flex;
   flex-direction: column;
-  padding: 60px 0px;
+  padding: 40px 0px;
   align-items: center;
   background: white;
   border-radius: 8px;
@@ -483,4 +477,15 @@ textarea:focus {
 .empty-state-content {
   margin: 28px;
   font-weight: 500px;
+}
+
+.flash-message {
+  background-color: rgb(251, 224, 223);
+  border-style: solid;
+  border-radius: 8px;
+  border-width: 1px;
+  border-color: rgb(190, 6, 0);
+  padding: 20px;
+  margin-bottom: 40px;
+  margin-top: 20px;
 }
