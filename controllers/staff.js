@@ -161,31 +161,37 @@ function loadResetPasswordForm(req, res){
 }
 
 async function resetPassword(req, res){
-  const existingStaff = await staffModel.findOne({emailAddress: req.body.email})
-  const storedPassword = existingStaff.password
-  const inputPassword = req.body.currentPassword
-  const hashedNewPassword = await bcrypt.hash(req.body.newPassword, 10)
-  
+  try{
+    const existingStaff = await staffModel.findOne({emailAddress: req.body.email})
+    const storedPassword = existingStaff.password
+    const inputPassword = req.body.currentPassword
+    const hashedNewPassword = await bcrypt.hash(req.body.newPassword, 10)
+    
 
-  const isMatch = await bcrypt.compare(inputPassword, storedPassword)
-  if(isMatch){
-    await staffModel.findOneAndUpdate(
-      {
-        emailAddress: req.body.email
-      },
-      {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        gender: req.body.gender,
-        emailAddress: req.body.email,
-        department: req.body.department,
-        qualification: req.body.qualification,
-        password: hashedNewPassword
-      }
-    )
-  
+    const isMatch = await bcrypt.compare(inputPassword, storedPassword)
+    if(isMatch){
+      await staffModel.findOneAndUpdate(
+        {
+          emailAddress: req.body.email
+        },
+        {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          gender: req.body.gender,
+          emailAddress: req.body.email,
+          department: req.body.department,
+          qualification: req.body.qualification,
+          password: hashedNewPassword
+        }
+      )
+      req.flash('message', 'Password reset successfully')
+      res.redirect('/')
+    } 
+  } catch(err){
+    req.flash('message', 'Unable to reset password')
     res.redirect('/')
-  } 
+  }
+  
 }
 
 
