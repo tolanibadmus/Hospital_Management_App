@@ -44,20 +44,19 @@ async function registerStaff(req, res) {
     });
     if (existingStaff) {
       req.flash("message", "Email address has been used by another user.");
-      res.redirect("/staff");
-    } else {
-      const addStaff = await staffModel.create({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        gender: req.body.gender,
-        emailAddress: req.body.email,
-        department: req.body.department,
-        qualification: req.body.qualification,
-        password: hashedPassword,
-      });
-      if (addStaff) {
-        res.redirect("/staff");
-      }
+      return res.redirect("/staff");
+    }
+    const addStaff = await staffModel.create({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      gender: req.body.gender,
+      emailAddress: req.body.email,
+      department: req.body.department,
+      qualification: req.body.qualification,
+      password: hashedPassword,
+    });
+    if (addStaff) {
+      return res.redirect("/staff");
     }
   } catch (err) {
     req.flash("message", "An error occured while registering the staff.");
@@ -199,7 +198,7 @@ async function resetPassword(req, res) {
         }
       );
       req.flash("message", "Password reset successfully");
-      res.redirect("/");
+      return res.redirect("/");
     }
   } catch (err) {
     req.flash("message", "Unable to reset password");

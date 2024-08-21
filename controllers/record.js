@@ -60,10 +60,10 @@ async function appointmentDocumentation(req,res){
   }
 
   if(appointmentRecord){
-    res.redirect(`/appointments/${req.params.id}/record`)
+    return res.redirect(`/appointments/${req.params.id}/record`)
   } else {
     req.flash('message', 'Patient not registered.')
-    res.redirect(`/appointments/${req.params.id}/record`)
+    return res.redirect(`/appointments/${req.params.id}/record`)
   }
 }
 
