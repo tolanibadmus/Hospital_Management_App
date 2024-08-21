@@ -36,22 +36,25 @@ async function registerNewPatient(req, res) {
     })
     if (existingUser) {
       req.flash('message', 'The email address has been used. Use another email address.')
-    }
-    let newPatient = await PatientModel.create({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      dob: new Date(req.body.dob),
-      gender: req.body.gender,
-      emailAddress: req.body.email,
-      address: req.body.address,
-      occupation: req.body.occupation,
-      nextOfKin: req.body.nextOfKin,
-      allergies: req.body.allergies || []
-    })
-  
-    if (newPatient){
       res.redirect('/patients')
-    }
+    } else {
+      let newPatient = await PatientModel.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        dob: new Date(req.body.dob),
+        gender: req.body.gender,
+        emailAddress: req.body.email,
+        address: req.body.address,
+        occupation: req.body.occupation,
+        nextOfKin: req.body.nextOfKin,
+        allergies: req.body.allergies || []
+      })
+
+      if (newPatient){
+        res.redirect('/patients')
+      }
+    } 
+    
   } catch(err){
     req.flash('message', 'Patient not registered.')
     res.redirect('/patients/add')
