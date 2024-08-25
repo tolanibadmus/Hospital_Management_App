@@ -29,7 +29,7 @@ async function getPatientRecord(req, res){
 }
 
 async function appointmentDocumentation(req,res){
-  let appointmentRecord
+  let appointmentRecord;
   const existingAppointmentRecord = await RecordModel.findOne({
     appointmentId: req.params.id
   })
@@ -40,11 +40,11 @@ async function appointmentDocumentation(req,res){
       },
       {
         $set: {
-          healthHistory: req.body.healthHistoryDocumentation ? req.body.healthHistoryDocumentation.trim() : '',
-          nurseDocumentation: req.body.nurseDocumentation ? req.body.nurseDocumentation.trim() : '',
-          doctorDocumentation: req.body.doctorDocumentation ? req.body.doctorDocumentation.trim() : '' ,
-          pharmacyDocumentation: req.body.pharmDocumentation ? req.body.pharmDocumentation.trim() : '' ,
-          labDocumentation: req.body.labDocumentation ? req.body.labDocumentation.trim() : ''
+          healthHistory: req.body.healthHistoryDocumentation ? req.body.healthHistoryDocumentation.trim() : existingAppointmentRecord.healthHistory,
+          nurseDocumentation: req.body.nurseDocumentation ? req.body.nurseDocumentation.trim() : existingAppointmentRecord.nurseDocumentation,
+          doctorDocumentation: req.body.doctorDocumentation ? req.body.doctorDocumentation.trim() : existingAppointmentRecord.doctorDocumentation,
+          pharmacyDocumentation: req.body.pharmDocumentation ? req.body.pharmDocumentation.trim() : existingAppointmentRecord.pharmacyDocumentation,
+          labDocumentation: req.body.labDocumentation ? req.body.labDocumentation.trim() : existingAppointmentRecord.labDocumentation
         }
       }
     )
