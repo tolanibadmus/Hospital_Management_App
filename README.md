@@ -1,7 +1,7 @@
 # Hospital Management App
 
 ## Description
-This is an MVP for an hospital management system that allows new patient registration, appointment booking and dcoumentation for registered patients. It also allows for staff registration and authentication.
+This is an MVP for an hospital management system that allows new patient registration, appointment booking and dcoumentation for registered patients. It also allows for staff registration and authentication. Check the e2e test repository [here](https://github.com/tolanibadmus/E2E-test-for-hospital-management-app)
 
 
 ## Set Up
